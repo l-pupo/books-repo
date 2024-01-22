@@ -35,6 +35,7 @@ export default class NYTServices {
 			const formattedResponse = toListsArray(response.data.results)
 			return formattedResponse
 		} catch (error) {
+			console.error(error)
 			// Controlla se l'errore è un errore Axios
 			if (axios.isAxiosError(error)) {
 				// Ora puoi essere sicuro che l'errore sia relativo a una richiesta HTTP
@@ -78,7 +79,10 @@ export default class NYTServices {
 		Prende come parametro obbligatorio il nome della lista 
 		e come parametro facoltativo il periodo di pubblicazione (default current)
 	*/
-	public async getBooksFromList(list: string, period?: string): Promise<any> {
+	public async getBooksFromList(
+		list: string,
+		period?: string
+	): Promise<BooksList> {
 		const url = `${this.NYT_BASE_URL}/lists/${
 			period ?? "current"
 		}/${list}.json?api-key=${this.NYT_API_KEY}`

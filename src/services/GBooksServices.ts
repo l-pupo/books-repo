@@ -1,7 +1,6 @@
 import axios from "axios"
 import dotenv from "dotenv"
 import { CustomErrors, HttpStatusCode } from "../utils"
-import { List } from "../utils/types"
 
 export default class GBookServices {
 	private static instance: GBookServices
@@ -22,7 +21,7 @@ export default class GBookServices {
 
 	/*
 	getBooks è il metodo per ottenere la preview delle liste di libri
-	Prende come parametro obbligatorio il codice isbn e restituisce il link alla preview
+	Prende come parametro obbligatorio il codice isbn e i dati sul libro
 	*/
 	public async getBookDetails(isbn: string): Promise<any> {
 		const url = `${this.GBOOKS_BASE_URL}/volumes?q=isbn:${isbn}`
@@ -31,6 +30,7 @@ export default class GBookServices {
 
 			return response.data
 		} catch (error) {
+			console.error(error)
 			// Controlla se l'errore è un errore Axios
 			if (axios.isAxiosError(error)) {
 				// Ora puoi essere sicuro che l'errore sia relativo a una richiesta HTTP

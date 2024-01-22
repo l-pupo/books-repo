@@ -3,6 +3,7 @@ import NYTServices from "../services/NYTServices"
 import GBooksServices from "../services/GBooksServices"
 import { HttpStatusCode, CustomErrors } from "../utils"
 import { Book } from "../utils/types"
+import { count } from "console"
 
 export default class BookController {
 	private static NYTservice: NYTServices = NYTServices.getInstance()
@@ -42,25 +43,34 @@ export default class BookController {
 		try {
 			const listName: string = req.query.listName as string
 			const period: string = req.query.period as string
-
 			if (!listName)
 				throw new CustomErrors.BadRequestError("Fornire il nome della lista")
 
-			const lists = await this.NYTservice.getBooksFromList(listName, period)
+			const list = await this.NYTservice.getBooksFromList(listName, period)
 
-			lists.books = await Promise.all(
-				lists.books.map(async (book: Book) => {
+			list.books = await Promise.all(
+				list.books.map(async (book: Book) => {
 					const details = await this.GBOOKService.getBookDetails(
-						book.primary_isbn10
+						book.primary_isbn13
 					)
-					return {
-						...book,
-						previewLink: details.items[0].volumeInfo.previewLink,
+					if (!details.items[0]?.volumeInfo.previewLink) {
+						console.info(
+							`Controller :: Nessun link preview per il libro ${book.title}`
+						)
+						return {
+							...book,
+							previewLink: "N/D",
+						}
+					} else {
+						return {
+							...book,
+							previewLink: details.items[0].volumeInfo.previewLink,
+						}
 					}
 				})
 			)
 
-			res.status(HttpStatusCode.Accepted).json(lists)
+			res.status(HttpStatusCode.Accepted).json(list)
 		} catch (error: any) {
 			res
 				.status(error.status || HttpStatusCode.InternalServerError)
