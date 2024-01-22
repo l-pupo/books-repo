@@ -5,10 +5,15 @@ Il progetto sfrutta le API libere di **NewYorkTimes** e **Google Books** per rec
 ## Intro
 
 Il progetto usa Nodejs ed è scritto in **Typescript**.
+
 All'interno della directory _src_ troviamo:
+
 **routes**: Qui vengono definiti i path dei nostri endpoint e associati al metodo della classe BookController
+
 **controller**: Contiene tutte le definizioni dei controller (in questo caso solo _BookController_)
+
 **services**: Contiene i servizi per interrogare le API di NYT e GBOOKS. Sfruttano l'approccio Singleton: ad ogni richiesta di un istanza, se già inizializzata, viene sfruttata la stessa istanza.
+
 **utils**: Contiene una serie di funzionalità di utilità: definizioni dei tipi, convertitori di tipi, definizioni di errori custom.
 
 ## Avvio
