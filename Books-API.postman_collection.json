@@ -1,0 +1,87 @@
+{
+	"info": {
+		"_postman_id": "2924f8a3-a496-4572-a924-4a9ce284f2ae",
+		"name": "Books-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26662634"
+	},
+	"item": [
+		{
+			"name": "Health Check",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"health"
+					]
+				},
+				"description": "Endpoint che semplicemente restituisce un messaggio di conferma se il backend è attivo"
+			},
+			"response": []
+		},
+		{
+			"name": "getBooksLists",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/getBooksLists",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"getBooksLists"
+					]
+				},
+				"description": "_**Endpoint 1)**_Non prende alcun parametro e restituisce tutte le liste di libri dall'archivio NYT"
+			},
+			"response": []
+		},
+		{
+			"name": "getBooksFromList",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/v1/getBooksFromList?listName=hardcover-fiction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"v1",
+						"getBooksFromList"
+					],
+					"query": [
+						{
+							"key": "listName",
+							"value": "hardcover-fiction"
+						},
+						{
+							"key": "period",
+							"value": "2008-06-08",
+							"disabled": true
+						}
+					]
+				},
+				"description": "**Endpoint 2)**\n\nPrende come parametro obbligatorio la lista dei libri da recuperare, come parametro facoltativo il periodo di pubblicazione (default current) Restituisce i libri della lista richiesta arricchiti con la preview da GBooks\\*/"
+			},
+			"response": []
+		}
+	]
+}
